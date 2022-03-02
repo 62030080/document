@@ -70,7 +70,7 @@ if ($_POST){
             </div>
             <div class="form-group">
                 <label for="dstatus">Document Status</label>
-                <input type="text" class="form-control" name="dstatus" id="dstatus">
+                <input type="text" class="form-control" name="dstatus" id="dstatus" value="Active">
             </div>
             <div class="form-group">
                 <label for="dfname">Document File Name</label>

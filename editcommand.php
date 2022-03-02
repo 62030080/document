@@ -26,13 +26,13 @@ if ($_POST){
 
     header("location: commandpage.php");
 } else {
-    $id = $_GET['id'];
+    $did = $_GET['did'];
     $sql = "SELECT *
             FROM documents
             WHERE id = ?";
 
     $stmt = $mysqli->prepare($sql);
-    $stmt->bind_param("i", $id);
+    $stmt->bind_param("i", $did);
     $stmt->execute();
     $result = $stmt->get_result();
     $row = $result->fetch_object();
@@ -53,34 +53,34 @@ if ($_POST){
 <body>
     <div class="container">
         <h1>Edit Command</h1>
-        <form action="editstaff.php" method="post">
+        <form action="editcommand.php" method="post">
         <div class="form-group">
                 <label for="did">id</label>
-                <input type="text" class="form-control" name="did" id="did">
+                <input type="text" class="form-control" name="did" id="did" value="<?php echo $row->id;?>">
             </div>
             <div class="form-group">
                 <label for="dnum">Document Number</label>
-                <input type="text" class="form-control" name="dnum" id="dnum">
+                <input type="text" class="form-control" name="dnum" id="dnum" value="<?php echo $row->doc_num;?>">
             </div>
             <div class="form-group">
                 <label for="dtitle">Document Title</label>
-                <input type="text" class="form-control" name="dtitle" id="dtitle">
+                <input type="text" class="form-control" name="dtitle" id="dtitle" value="<?php echo $row->doc_title;?>">
             </div>
             <div class="form-group">
                 <label for="dsdate">Document Start Date</label>
-                <input type="date" class="form-control" name="dsdate" id="dsdate">
+                <input type="date" class="form-control" name="dsdate" id="dsdate" value="<?php echo $row->doc_start_date;?>">
             </div>
             <div class="form-group">
                 <label for="dtdate">Document To Date</label>
-                <input type="date" class="form-control" name="dtdate" id="dtdate">
+                <input type="date" class="form-control" name="dtdate" id="dtdate" value="<?php echo $row->doc_to_date;?>">
             </div>
             <div class="form-group">
                 <label for="dstatus">Document Status</label>
-                <input type="text" class="form-control" name="dstatus" id="dstatus">
+                <input type="text" class="form-control" name="dstatus" id="dstatus" value="<?php echo $row->doc_status;?>">
             </div>
             <div class="form-group">
                 <label for="dfname">Document File Name</label>
-                <input type="text" class="form-control" name="dfname" id="dfname">
+                <input type="text" class="form-control" name="dfname" id="dfname" value="<?php echo $row->doc_file_name;?>">
             </div>
             <input type="hidden" name="id" value="<?php echo $row->id;?>">
             <button type="submit" class="btn btn-success">Update</button>
