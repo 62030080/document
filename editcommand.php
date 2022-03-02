@@ -26,13 +26,13 @@ if ($_POST){
 
     header("location: commandpage.php");
 } else {
-    $did = $_GET['did'];
+    $id = $_GET['id'];
     $sql = "SELECT *
             FROM documents
             WHERE id = ?";
 
     $stmt = $mysqli->prepare($sql);
-    $stmt->bind_param("i", $did);
+    $stmt->bind_param("i", $id);
     $stmt->execute();
     $result = $stmt->get_result();
     $row = $result->fetch_object();
