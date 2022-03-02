@@ -55,7 +55,7 @@ if ($_POST){
         <form action="editcommand.php" method="post">
         <div class="form-group">
                 <label for="did">id</label>
-                <input type="text" class="form-control" name="did" id="did" value="<?php echo $row->id;?>">
+                <input type="text" readonly class="form-control" name="did" id="did" value="<?php echo $row->id;?>">
             </div>
             <div class="form-group">
                 <label for="dnum">Document Number</label>
