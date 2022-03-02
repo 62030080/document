@@ -3,7 +3,7 @@ require_once("dbconfig.php");
 
 // ตรวจสอบว่ามีการ post มาจากฟอร์ม ถึงจะเพิ่ม
 if ($_POST){
-    $sid = $_POST['sid'];
+    // $sid = $_POST['sid'];
     $stc = $_POST['stc'];
     $stn = $_POST['stn'];
 
@@ -18,10 +18,10 @@ if ($_POST){
     // ในส่วนของ INTO ให้กำหนดให้ตรงกับชื่อคอลัมน์ในตาราง actor
     // ต้องแน่ใจว่าคำสั่ง INSERT ทำงานใด้ถูกต้อง - ให้ทดสอบก่อน
     $sql = "INSERT 
-            INTO staff (id, stf_code, stf_name) 
-            VALUES (?, ?, ?)";
+            INTO staff (stf_code, stf_name) 
+            VALUES (?, ?)";
     $stmt = $mysqli->prepare($sql);
-    $stmt->bind_param("iss", $sid, $stc, $stn);
+    $stmt->bind_param("ss", $stc, $stn);
     $stmt->execute();
 
     // redirect ไปยัง actor.php
@@ -44,17 +44,17 @@ if ($_POST){
     <div class="container">
         <h1>เพิ่มบุคลากร</h1>
         <form action="addstaff.php" method="post">
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label for="sid">id</label>
                 <input type="text" class="form-control" name="sid" id="sid">
-            </div>
+            </div> -->
             <div class="form-group">
                 <label for="stc">Staff Code</label>
-                <input type="text" class="form-control" name="stc" id="stc">
+                <input type="text" class="form-control" name="stc" id="stc" require>
             </div>
             <div class="form-group">
                 <label for="stn">Staff Name</label>
-                <input type="text" class="form-control" name="stn" id="stn">
+                <input type="text" class="form-control" name="stn" id="stn" require>
             </div>
             <button type="submit" class="btn btn-success">Save</button>
         </form>

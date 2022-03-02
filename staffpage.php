@@ -25,7 +25,10 @@
         // ตัวแปร $_POST เป็นตัวแปรอะเรย์ของ php ที่มีค่าของข้อมูลที่โพสมาจากฟอร์ม
         // ดึงค่าที่โพสจากฟอร์มตาม name ที่กำหนดในฟอร์มมากำหนดให้ตัวแปร $kw
         // ใส่ % เพือเตรียมใช้กับ LIKE
-        @$kw = "%{$_POST['kw']}%";
+        if ($_POST) {
+            $kw = "%{$_POST['kw']}%";
+        }
+        else {$kw = "%";}
 
         // เตรียมคำสั่ง SELECT ที่ถูกต้อง(ทดสอบให้แน่ใจ)
         // ถ้าต้องการแทนที่ค่าของตัวแปร ให้แทนที่ตัวแปรด้วยเครื่องหมาย ? 
@@ -50,11 +53,11 @@
             echo "Not found!";
         } else {
             echo "Found " . $result->num_rows . " record(s).";
-            // สร้างตัวแปรเพื่อเก็บข้อความ html 
+            // สร้างตัวแปรเพื่อเก็บข้อความ html
+            // <th scope='col'>id</th>
             $table = "<table class='table table-hover'>
                         <thead>
                             <tr>
-                                <th scope='col'>id</th>
                                 <th scope='col'>stf_code</th>
                                 <th scope='col'>stf_name</th>
                                 <th scope='col'>edit/delete</th>
@@ -66,7 +69,7 @@
             while($row = $result->fetch_object()){ 
                 $table.= "<tr>";
                 // $table.= "<td>" . $i++ . "</td>";
-                $table.= "<td>$row->id</td>";
+                // $table.= "<td>$row->id</td>";
                 $table.= "<td>$row->stf_code</td>";
                 $table.= "<td>$row->stf_name</td>";
                 $table.= "<td>";

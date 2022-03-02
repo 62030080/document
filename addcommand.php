@@ -3,12 +3,12 @@ require_once("dbconfig.php");
 
 // ตรวจสอบว่ามีการ post มาจากฟอร์ม ถึงจะเพิ่ม
 if ($_POST){
-    $did = $_POST['did'];
+    // $did = $_POST['did'];
     $dnum = $_POST['dnum'];
     $dtitle = $_POST['dtitle'];
     $dsdate = $_POST['dsdate'];
-    $dtdate = $_POST['dtdate'];
-    $dstatus = $_POST['dstatus'];
+    // $dtdate = $_POST['dtdate'];
+    // $dstatus = $_POST['dstatus'];
     $dfname = $_POST['dfname'];
 
 
@@ -22,10 +22,10 @@ if ($_POST){
     // ในส่วนของ INTO ให้กำหนดให้ตรงกับชื่อคอลัมน์ในตาราง actor
     // ต้องแน่ใจว่าคำสั่ง INSERT ทำงานใด้ถูกต้อง - ให้ทดสอบก่อน
     $sql = "INSERT 
-            INTO documents (id, doc_num, doc_title, doc_start_date, doc_to_date, doc_status, doc_file_name) 
-            VALUES (?, ?, ?, ?, ?, ?, ?)";
+            INTO documents ( doc_num, doc_title, doc_start_date, doc_to_date, doc_status, doc_file_name) 
+            VALUES (?, ?, ?, NULL, 'Active', ?)";
     $stmt = $mysqli->prepare($sql);
-    $stmt->bind_param("issssss", $did, $dnum, $dtitle, $dsdate, $dtdate, $dstatus, $dfname);
+    $stmt->bind_param("ssss", $dnum, $dtitle, $dsdate, $dfname);
     $stmt->execute();
 
     // redirect ไปยัง actor.php
@@ -48,10 +48,10 @@ if ($_POST){
     <div class="container">
         <h1>เพิ่มคำสั่งแต่งตั้ง</h1>
         <form action="addcommand.php" method="post">
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label for="did">id</label>
                 <input type="text" class="form-control" name="did" id="did">
-            </div>
+            </div> -->
             <div class="form-group">
                 <label for="dnum">Document Number</label>
                 <input type="text" class="form-control" name="dnum" id="dnum">
@@ -64,14 +64,14 @@ if ($_POST){
                 <label for="dsdate">Document Start Date</label>
                 <input type="date" class="form-control" name="dsdate" id="dsdate">
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label for="dtdate">Document To Date</label>
                 <input type="date" class="form-control" name="dtdate" id="dtdate">
             </div>
             <div class="form-group">
                 <label for="dstatus">Document Status</label>
                 <input type="text" class="form-control" name="dstatus" id="dstatus" value="Active">
-            </div>
+            </div> -->
             <div class="form-group">
                 <label for="dfname">Document File Name</label>
                 <input type="text" class="form-control" name="dfname" id="dfname">

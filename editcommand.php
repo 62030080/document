@@ -12,16 +12,15 @@ if ($_POST){
     $dfname = $_POST['dfname'];
 
     $sql = "UPDATE documents 
-            SET id = ?,
-                doc_num = ?,
+            SET doc_num = ?,
                 doc_title = ?,
                 doc_start_date = ?,
                 doc_to_date = ?,
                 doc_status = ?,
-                doc_file_name = ?,  
+                doc_file_name = ?  
             WHERE id = ?";
     $stmt = $mysqli->prepare($sql);
-    $stmt->bind_param("issssss", $did, $dnum, $dtitle, $dsdate, $dtdate, $dstatus, $dfname);
+    $stmt->bind_param("ssssssi", $dnum, $dtitle, $dsdate, $dtdate, $dstatus, $dfname, $did);
     $stmt->execute();
 
     header("location: commandpage.php");

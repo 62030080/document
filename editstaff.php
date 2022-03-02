@@ -3,16 +3,18 @@ require_once("dbconfig.php");
 
 // ตรวจสอบว่ามีการ post มาจากฟอร์ม ถึงจะลบ
 if ($_POST){
+    // print_r($_POST);
     $sid = $_POST['sid'];
     $stc = $_POST['stc'];
     $stn = $_POST['stn'];
 
     $sql = "UPDATE staff 
             SET stf_code = ?,
-                stf_name = ?,
+                stf_name = ?
             WHERE id = ?";
+
     $stmt = $mysqli->prepare($sql);
-    $stmt->bind_param("ssi", $stc, $stn, $id);
+    $stmt->bind_param("ssi", $stc, $stn, $sid);
     $stmt->execute();
 
     header("location: staffpage.php");
