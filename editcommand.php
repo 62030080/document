@@ -42,7 +42,7 @@ if ($_POST){
 <html lang="en">
 
 <head>
-    <title>Edit Command</title>
+    <title>แก้ไขคำสั่งแต่งตั้ง</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -52,7 +52,7 @@ if ($_POST){
 
 <body>
     <div class="container">
-        <h1>Edit Command</h1>
+        <h1>แก้ไขคำสั่งแต่งตั้ง</h1>
         <form action="editcommand.php" method="post">
         <div class="form-group">
                 <label for="did">id</label>

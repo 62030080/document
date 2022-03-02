@@ -18,7 +18,7 @@ if ($_POST){
     header("location: staffpage.php");
 } else {
     // ดึงค่าที่ส่งผ่านมาทาง query string มากำหนดให้ตัวแปร $id
-    $sid = $_GET['sid'];
+    $sid = $_GET['id'];
     $sql = "SELECT *
             FROM staff
             WHERE id = ?";
@@ -34,7 +34,7 @@ if ($_POST){
 <html lang="en">
 
 <head>
-    <title>Delete Staff</title>
+    <title>ลบบุคลากร</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -44,7 +44,7 @@ if ($_POST){
 
 <body>
     <div class="container">
-        <h1>Delete Staff</h1>
+        <h1>ลบบุคลากร</h1>
         <table class="table table-hover">
             <tr>
                 <th style='width:120px'>id</th>
