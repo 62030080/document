@@ -34,7 +34,7 @@ if ($_POST){
 <html lang="en">
 
 <head>
-    <title>ลบคำสั่ง</title>
+    <title>ลบคำสั่งแต่งตั้ง</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -44,7 +44,7 @@ if ($_POST){
 
 <body>
     <div class="container">
-        <h1>ลบคำสั่ง</h1>
+        <h1>ลบคำสั่งแต่งตั้ง</h1>
         <table class="table table-hover">
             <tr>
                 <th style='width:120px'>id</th>
