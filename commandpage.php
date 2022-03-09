@@ -13,7 +13,7 @@
 <body>
     <div class="container">
         <h1>จัดการคำสั่งแต่งตั้ง |<a href='mainpage.php'><span class='glyphicon glyphicon-home' aria-hidden='true'></span></a>
-        | <a href='addcommand.php'><span class='glyphicon glyphicon-plus'></span></a></h1>
+        | <a href='addcommand.php'><span class='glyphicon glyphicon-plus'></span></a></h1>|
         <form action="#" method="post">
             <input type="text" name="kw" placeholder="ใส่เลขที่คำสั่งหรือชื่อคำสั่ง" value="">
             <input type="submit">
@@ -86,6 +86,8 @@
                 $table.= "<a href='editcommand.php?id=$row->id'><span class='glyphicon glyphicon-pencil' aria-hidden='true'></span></a>";
                 $table.= " | ";
                 $table.= "<a href='deletecommand.php?id=$row->id'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></a>";
+                $table.= " | ";
+                $table.= "<a href='addstafftodoc.php?id=$row->id'><span class='glyphicon glyphicon-user' aria-hidden='true'></span></a>";
                 $table.= "</td>";
                 $table.= "</tr>";
             }

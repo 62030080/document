@@ -29,7 +29,8 @@ if ($_POST){
     $stmt->execute();
 
     // redirect ไปยัง actor.php
-    header("location: commandpage.php");
+    // echo $mysqli->insert_id;
+    header("location: addstafftodoc.php?id=$mysqli->insert_id");
 }
 ?>
 <!DOCTYPE html>
@@ -75,6 +76,16 @@ if ($_POST){
             <div class="form-group">
                 <label for="dfname">Document File Name</label>
                 <input type="text" class="form-control" name="dfname" id="dfname">
+            </div>
+            
+            <div class="form-group">
+                <label for="">คณะกรรมการ</label>
+                <input type="checkbox" class="form-control" name="" id="">
+            </div>
+            <div class="form-group">
+                <label for="">เพิ่มไฟล์</label><br>
+                <a href="addcommandfile.php" class="btn btn-primary">Add file</a>
+                <!-- <button type="addfile" class="btn btn-default">Add File</button> -->
             </div>
             <button type="submit" class="btn btn-success">Save</button>
         </form>
