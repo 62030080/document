@@ -13,15 +13,24 @@
 
 <?php
 if ($_POST){
-  echo "<pre>";
-  print_r($_FILES); //ดูรายละเอียดไฟล์ที่ upload เป็น array 2 มิติ
-  $target_dir = "uploads/"; //ตำแหน่งที่เอาไฟล์ไปเก็บ
+  // echo "<pre>";
+  // print_r($_FILES); //ดูรายละเอียดไฟล์ที่ upload เป็น array 2 มิติ
+  $target_dir = "upfile/"; //ตำแหน่งที่เอาไฟล์ไปเก็บ
   $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]); //
   $fileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION)); // เอานามสกุลไฟล์ที่ upload
-
+  $realname = basename($_FILES["fileToUpload"]["name"]);
   $target_file = $target_dir . basename($_FILES["fileToUpload"]["tmp_name"]);
-  $tmp_file_name = substr($_FILES["fileToUpload"]["tmp_name"],5) . ".$fileType";
-  $tmp_f_n_to_upload =  "uploads/" . $tmp_file_name;
+  $tmp_file_name =  "upfile/" . substr($_FILES["fileToUpload"]["tmp_name"],5) . ".$fileType";
+  print_r($tmp_file_name);
+  echo "<br/>";
+  $tmp_f_n_to_upload = substr($tmp_file_name,7);
+  print_r($tmp_f_n_to_upload);
+  echo "<br/>";
+  print_r($realname);
+  echo "<br/>";
+  print_r($fileType);
+  echo "<br/>";
+  // $tmp_f_n_to_upload =  "uploads/" . $tmp_file_name;
   if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $tmp_file_name)) {
     echo "The file ". htmlspecialchars( basename( $_FILES["fileToUpload"]["name"])). " has been uploaded.";
   } else {
@@ -30,6 +39,7 @@ if ($_POST){
 }
 ?>
 <a href="<?php echo $tmp_file_name; ?>">Open File</a>
+<a href="addcommand.php">Back</a>
 <?php
 // $uploadOk = 1;
 // $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));

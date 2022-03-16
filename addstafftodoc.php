@@ -1,39 +1,78 @@
+<?php 
+    session_start();
+
+    if (!isset($_SESSION['username'])) {
+        $_SESSION['msg'] = "You must log in first";
+        header('location: loginpage.php');
+    }
+
+    if (isset($_GET['logout'])) {
+        session_destroy();
+        unset($_SESSION['username']);
+        header('location: loginpage.php');
+    }
+?>
 <?php
 require_once("dbconfig.php");
-$id = $_GET['id'];
+
 if ($_POST){
-    $did = $_POST['doc_id'];
-    echo "<pre>";
-    print_r($_POST);
-for($i=0;$i<count($_POST['staff_id']);$i++){
-    // echo $_POST['staff_id'][$i];
-    $sql = "INSERT 
-    INTO doc_staff (doc_id, stf_id) 
-    VALUES (?, ?)";
+    // echo "<pre>";
+    // print_r($_POST);
+    $id = $_POST['id'];
+
+    $sql = "DELETE 
+            FROM doc_staff 
+            WHERE doc_id = ?";
     $stmt = $mysqli->prepare($sql);
-    $stmt->bind_param("ii", $did, $_POST['staff_id'][$i]);
+    $stmt->bind_param("i", $id);
     $stmt->execute();
-}
+ 
+    @$staff_id = $_POST['staff_id'];
 
+    if(!empty($staff_id)){
+        for ($i=0; $i<count($staff_id); $i++){
+            $sql = "INSERT 
+                    INTO doc_staff (doc_id, stf_id) 
+                    VALUES (?, ?)";
+            $stmt = $mysqli->prepare($sql);
+            $stmt->bind_param("ss", $id, $staff_id[$i]);
+            $stmt->execute();
+        }
+    }
+    
+    header("location: commandpage.php");
+} else {
+    $doc_id = $_GET['id'];
+    $sql = "SELECT *
+            FROM documents
+            WHERE id = ?";
+
+    $stmt = $mysqli->prepare($sql);
+    $stmt->bind_param("i", $doc_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_object();
+
+    echo "<h4>$row->doc_num : $row->doc_title</h4>";
+
+    $sql = "SELECT * 
+            FROM staff LEFT JOIN (SELECT * FROM doc_staff WHERE doc_id = ?) ds ON staff.id = ds.stf_id
+            ORDER BY staff.id";
+    $stmt = $mysqli->prepare($sql);
+    $stmt->bind_param("i", $doc_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
 }
 ?>
 
-<form action="#" method="post">
-<input type="hidden" name="doc_id" value="<?php echo $id; ?>">
-<?php
-
-$sql = "SELECT *
-        FROM staff
-        ORDER BY id";
-        $stmt = $mysqli->prepare($sql);
-        // $stmt->bind_param("s", $kw);
-        $stmt->execute();
-        $result = $stmt->get_result();
-// <!-- select * from staff เปลี่ยน value และ aaa ตามฟิลด์ -->
-// <!-- <input type="checkbox" name="staff_id[]" value="1">aaa<br> -->
-while($row = $result->fetch_object()){ 
-    echo "<input type='checkbox' name='staff_id[]' value='$row->id'>$row->stf_name<br>";
-}
-?>
-<input type="submit">
+<form action="addstafftodoc.php" method="post">
+    <input type="hidden" name="id" value="<?php echo $doc_id; ?>">
+    <?php
+    while($row = $result->fetch_object()){ ?>
+    <div class="checkbox">
+        <label><input type="checkbox" name="staff_id[]" <?php if ($row->doc_id <> null) echo "checked";?>
+                value="<?php echo $row->id; ?>"><?php echo $row->stf_name; ?></label>
+    </div>
+    <?php } ?>
+    <input type="submit">
 </form>

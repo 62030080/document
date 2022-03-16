@@ -1,3 +1,17 @@
+<?php 
+    session_start();
+
+    if (!isset($_SESSION['username'])) {
+        $_SESSION['msg'] = "You must log in first";
+        header('location: loginpage.php');
+    }
+
+    if (isset($_GET['logout'])) {
+        session_destroy();
+        unset($_SESSION['username']);
+        header('location: loginpage.php');
+    }
+?>
 <?php
 require_once("dbconfig.php");
 
@@ -53,10 +67,10 @@ if ($_POST){
     <div class="container">
         <h1>แก้ไขคำสั่งแต่งตั้ง</h1>
         <form action="editcommand.php" method="post">
-        <div class="form-group">
+        <!-- <div class="form-group">
                 <label for="did">id</label>
                 <input type="text" readonly class="form-control" name="did" id="did" value="<?php echo $row->id;?>">
-            </div>
+            </div> -->
             <div class="form-group">
                 <label for="dnum">Document Number</label>
                 <input type="text" class="form-control" name="dnum" id="dnum" value="<?php echo $row->doc_num;?>">

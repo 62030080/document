@@ -1,20 +1,39 @@
+<?php 
+    session_start();
+
+    if (!isset($_SESSION['username'])) {
+        $_SESSION['msg'] = "You must log in first";
+        header('location: loginpage.php');
+    }
+
+    if (isset($_GET['logout'])) {
+        session_destroy();
+        unset($_SESSION['username']);
+        header('location: loginpage.php');
+    }
+?>
 <?php
 require_once("dbconfig.php");
 
 // ตรวจสอบว่ามีการ post มาจากฟอร์ม ถึงจะลบ
 if ($_POST){
     // print_r($_POST);
-    $sid = $_POST['sid'];
+    $id = $_POST['id'];
     $stc = $_POST['stc'];
     $stn = $_POST['stn'];
-
+    $username = mysqli_real_escape_string($mysqli, $_POST['username']);
+    $psw = mysqli_real_escape_string($mysqli, $_POST['psw']);
+    $pswrepeat = mysqli_real_escape_string($mysqli, $_POST['pswrepeat']);
+    $password = md5($psw);
     $sql = "UPDATE staff 
             SET stf_code = ?,
-                stf_name = ?
+                stf_name = ?,
+                username = ?,
+                passwd = ?
             WHERE id = ?";
 
     $stmt = $mysqli->prepare($sql);
-    $stmt->bind_param("ssi", $stc, $stn, $sid);
+    $stmt->bind_param("ssssi", $stc, $stn, $username,$password, $id);
     $stmt->execute();
 
     header("location: staffpage.php");
@@ -47,10 +66,6 @@ if ($_POST){
     <div class="container">
         <h1>แก้ไขบุคลากร</h1>
         <form action="editstaff.php" method="post">
-        <div class="form-group">
-                <label for="sid">id</label>
-                <input type="int" readonly class="form-control" name="sid" id="sid" value="<?php echo $row->id;?>">
-            </div>
             <div class="form-group">
                 <label for="stc">Staff Code</label>
                 <input type="text" class="form-control" name="stc" id="stc" value="<?php echo $row->stf_code;?>">
@@ -58,6 +73,18 @@ if ($_POST){
             <div class="form-group">
                 <label for="stn">Staff name</label>
                 <input type="text" class="form-control" name="stn" id="stn" value="<?php echo $row->stf_name;?>">
+            </div>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" placeholder="Enter username" name="username" id="username" value="<?php echo $row->username;?>">
+            </div>
+            <div class="form-group">
+                <label for="psw"><b>Password</b></label>
+                <input type="password" class="form-control" placeholder="Enter Password" name="psw">
+            </div>
+            <div class="form-group">
+                <label for="pswrepeat"><b>Confirm Password</b></label>
+                <input type="password" class="form-control" placeholder="Confirm Password" name="pswrepeat">
             </div>
             <input type="hidden" name="id" value="<?php echo $row->id;?>">
             <button type="submit" class="btn btn-success">Update</button>

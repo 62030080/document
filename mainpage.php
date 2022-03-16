@@ -1,3 +1,18 @@
+<?php 
+    session_start();
+
+    if (!isset($_SESSION['username'])) {
+        $_SESSION['msg'] = "You must log in first";
+        header('location: loginpage.php');
+    }
+
+    if (isset($_GET['logout'])) {
+        session_destroy();
+        unset($_SESSION['username']);
+        header('location: loginpage.php');
+    }
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,9 +26,14 @@
 </head>
 
 <body>
+    
+    <?php if (isset($_SESSION['username'])) : ?>
+        <p>Welcome <strong> <?php echo $_SESSION['username']; ?></strong></p>
+        <p><a href="mainpage.php?logout='1'" style="color : red;">Logout</a></p>
+    <?php endif ?>
     <div class="container">
-        <h1>คำสั่งแต่งตั้ง | <a href='staffpage.php?id=$row->id'><span class='glyphicon glyphicon-user' aria-hidden='true'></span></a>
-        | <a href='commandpage.php?id=$row->id'><span class='glyphicon glyphicon-book' aria-hidden='true'></span></a></h1>
+        <h1>คำสั่งแต่งตั้ง | <a href='staffpage.php'><span class='glyphicon glyphicon-user' aria-hidden='true'></span></a>
+        | <a href='commandpage.php'><span class='glyphicon glyphicon-book' aria-hidden='true'></span></a></h1>
         <form action="#" method="post">
             <input type="text" name="kw" placeholder="ใส่เลขที่คำสั่งหรือชื่อคำสั่ง" value="">
             <input type="submit">
